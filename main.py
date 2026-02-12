@@ -5,8 +5,8 @@ from aiogram.filters import Command
 from supabase import create_client
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
