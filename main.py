@@ -4,10 +4,6 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from supabase import create_client
 
-print("BOT_TOKEN:", os.getenv("BOT_TOKEN"))
-print("SUPABASE_URL:", os.getenv("SUPABASE_URL"))
-print("SUPABASE_KEY:", os.getenv("SUPABASE_KEY"))
-
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
