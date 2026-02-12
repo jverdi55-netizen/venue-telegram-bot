@@ -1,6 +1,4 @@
 aiogram==3.4.1
 supabase==2.3.0
 httpx==0.24.1
-gotrue==1.0.4
-postgrest==0.13.0
 python-dotenv==1.0.1
