@@ -1,3 +1,6 @@
+print("BOT_TOKEN:", os.getenv("BOT_TOKEN"))
+print("SUPABASE_URL:", os.getenv("SUPABASE_URL"))
+print("SUPABASE_KEY:", os.getenv("SUPABASE_KEY"))
 import os
 import asyncio
 from aiogram import Bot, Dispatcher, types
