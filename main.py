@@ -17,9 +17,15 @@ async def start(message: types.Message):
     await message.answer("Привет 👋 Я бот для управления датами площадок.\n\nКоманды:\n/addvenue\n/adddates\n/getdates")
 
 
+@dp.message(Command("addvenue"))
 async def add_venue(message: types.Message):
     try:
-        _, name, country, city, capacity = message.text.split(",")
+        parts = message.text.split(",")
+
+        if len(parts) != 5:
+            raise ValueError
+
+        _, name, country, city, capacity = parts
 
         response = supabase.table("venues").insert({
             "name": name.strip(),
@@ -28,13 +34,17 @@ async def add_venue(message: types.Message):
             "capacity": int(capacity.strip())
         }).execute()
 
-        print("SUPABASE RESPONSE:", response)
-
-        await message.answer(f"✅ Площадка {name} добавлена")
+        if response.data:
+            await message.answer(f"✅ Площадка {name.strip()} добавлена")
+        else:
+            await message.answer("❌ Ошибка при добавлении в базу")
 
     except Exception as e:
-        print("ERROR:", e)
-        await message.answer(f"❌ Ошибка: {e}")
+        print(e)
+        await message.answer(
+            "Формат:\n/addvenue, Название, Страна, Город, Вместимость"
+        )
+
 
 
 
