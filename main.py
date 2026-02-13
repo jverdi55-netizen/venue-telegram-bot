@@ -2,7 +2,6 @@ import os
 import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
-from supabase import create_client
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 SUPABASE_URL = os.getenv("SUPABASE_URL")
@@ -10,8 +9,6 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
-
-supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
