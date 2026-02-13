@@ -1,5 +1,2 @@
 aiogram==3.4.1
-supabase==2.0.2
-httpx==0.23.3
-gotrue==1.0.4
-postgrest==0.10.6
+requests==2.31.0
