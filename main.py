@@ -18,7 +18,7 @@ async def start(message: types.Message):
 
 
 @dp.message(Command("addvenue"))
-async def add_venue(message: types.Message):
+from aiogram.filters import Command
     try:
         parts = message.text.split(",")
 
