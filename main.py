@@ -72,39 +72,34 @@ async def add_dates(message: types.Message):
         await message.answer("Формат:\n/adddates, Название, Месяц(число), Год, 1-5,10,15")
 
 
-@dp.message(Command("getdates"))
-async def get_dates(message: types.Message):
+@dp.message(Command("addvenue"))
+async def add_venue(message: types.Message):
     try:
-        _, venue_name, month, year = message.text.split(",")
+        parts = message.text.split(",")
 
-        venue = supabase.table("venues").select("*").eq("name", venue_name.strip()).execute()
-
-        if not venue.data:
-            await message.answer("❌ Площадка не найдена")
+        if len(parts) != 5:
+            await message.answer("❌ Неверный формат")
             return
 
-        venue_id = venue.data[0]["id"]
+        _, name, country, city, capacity = parts
 
-        data = supabase.table("availability")\
-            .select("*")\
-            .eq("venue_id", venue_id)\
-            .eq("month", int(month.strip()))\
-            .eq("year", int(year.strip()))\
-            .execute()
+        response = supabase.table("venues").insert({
+            "name": name.strip(),
+            "country": country.strip(),
+            "city": city.strip(),
+            "capacity": int(capacity.strip())
+        }).execute()
 
-        if not data.data:
-            await message.answer("Нет данных")
-            return
+        print("SUPABASE RESPONSE:", response)
 
-        dates = data.data[0]["free_dates"]
-        await message.answer(f"📅 Свободные даты:\n{dates}")
+        if response.data:
+            await message.answer(f"✅ Площадка {name.strip()} добавлена")
+        else:
+            await message.answer("❌ Не удалось добавить в базу")
 
-    except:
-        await message.answer("Формат:\n/getdates, Название, Месяц(число), Год")
-
-
-async def main():
-    await dp.start_polling(bot)
+    except Exception as e:
+        print("ERROR:", e)
+        await message.answer(f"❌ Ошибка: {e}")
 
 
 if __name__ == "__main__":
